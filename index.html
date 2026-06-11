@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TOUCH LAB 触觉实验室 — Feel Before You See. 一场关于触觉与感知的实验性互动展览。21 June 2026 · Design Studio 3." />
+  <meta name="theme-color" content="#F02D7D" />
+  <title>TOUCH LAB · 触觉实验室 — Feel Before You See</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F02D7D'/%3E%3Ctext x='16' y='22' font-family='Arial Black' font-size='14' font-weight='900' fill='white' text-anchor='middle'%3ETL%3C/text%3E%3C/svg%3E" />
+
+  <script type="module" src="/src/main.js"></script>
+</head>
+
+<body data-loading>
+
+  <!-- ============ SHARED SVG DEFS : hand shape / thermal gradients / filters ============ -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Stylised reaching hand, index finger extended. Wrist at bottom. -->
+      <path id="hand-shape" d="M118 470
+        C112 432 108 404 103 372
+        C88 358 60 336 42 312
+        C30 296 22 280 30 270
+        C38 261 54 270 67 282
+        C80 294 90 305 99 312
+        C97 290 95 264 94 240
+        C93 190 94 110 99 62
+        C101 42 118 41 121 60
+        C126 110 128 156 129 204
+        C133 213 140 213 144 205
+        C145 172 147 138 151 116
+        C153 97 169 98 171 117
+        C174 152 174 178 175 210
+        C179 219 186 219 190 211
+        C192 186 195 160 200 142
+        C203 124 217 127 218 145
+        C219 172 217 196 216 218
+        C220 227 227 226 231 219
+        C234 200 239 182 245 168
+        C250 154 262 159 261 174
+        C258 204 252 234 246 262
+        C238 296 232 330 229 364
+        C227 401 224 436 220 470 Z" />
+
+      <!-- Thermal / neon camera gradient -->
+      <linearGradient id="thermal" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0"    stop-color="#FFE45C"/>
+        <stop offset="0.28" stop-color="#FF8A3D"/>
+        <stop offset="0.5"  stop-color="#FF3D9A"/>
+        <stop offset="0.72" stop-color="#B44CFF"/>
+        <stop offset="0.88" stop-color="#3DC8FF"/>
+        <stop offset="1"    stop-color="#51FFA8"/>
+      </linearGradient>
+      <linearGradient id="thermal-flip" x1="1" y1="1" x2="0" y2="0">
+        <stop offset="0"    stop-color="#FFE45C"/>
+        <stop offset="0.28" stop-color="#FF8A3D"/>
+        <stop offset="0.5"  stop-color="#FF3D9A"/>
+        <stop offset="0.72" stop-color="#B44CFF"/>
+        <stop offset="0.88" stop-color="#3DC8FF"/>
+        <stop offset="1"    stop-color="#51FFA8"/>
+      </linearGradient>
+      <radialGradient id="sheen" cx="0.35" cy="0.25" r="0.9">
+        <stop offset="0"   stop-color="#FFFFFF" stop-opacity="0.85"/>
+        <stop offset="0.4" stop-color="#3DC8FF" stop-opacity="0.35"/>
+        <stop offset="1"   stop-color="#3DC8FF" stop-opacity="0"/>
+      </radialGradient>
+
+      <!-- Organic printed edge -->
+      <filter id="hand-rough" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="14"/>
+      </filter>
+      <filter id="blur-big" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="20"/>
+      </filter>
+      <filter id="blob-rough" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="10"/>
+      </filter>
+
+      <!-- Gooey liquid filter for buttons -->
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b"/>
+        <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="g"/>
+        <feComposite in="SourceGraphic" in2="g" operator="atop"/>
+      </filter>
+
+      <!-- Generic blob for the fluid layer -->
+      <path id="blob-shape" d="M100 16 C142 8 180 38 186 84 C192 130 168 172 126 184 C84 196 36 178 20 136 C4 94 20 44 62 26 C74 21 86 19 100 16 Z"/>
+    </defs>
+  </svg>
+
+  <!-- ============ FIXED ATMOSPHERE LAYERS ============ -->
+  <div class="fluid-scroll" aria-hidden="true">
+    <div class="fluid-layer" data-depth="0.025">
+      <svg class="blob blob--a" viewBox="0 0 200 200"><use href="#blob-shape" fill="#F5B82E" filter="url(#blob-rough)"/></svg>
+      <svg class="blob blob--b" viewBox="0 0 200 200"><use href="#blob-shape" fill="#F5B82E" filter="url(#blob-rough)"/></svg>
+      <svg class="blob blob--c" viewBox="0 0 200 200"><use href="#blob-shape" fill="#F5B82E" filter="url(#blob-rough)"/></svg>
+      <span class="blob-dot blob-dot--a"></span>
+      <span class="blob-dot blob-dot--b"></span>
+      <span class="blob-dot blob-dot--c"></span>
+    </div>
+  </div>
+
+  <canvas id="particles" class="particles-canvas" aria-hidden="true"></canvas>
+  <canvas id="webgl" class="webgl-canvas" aria-hidden="true"></canvas>
+  <div class="glow-follow" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-head">
+    <a class="site-head__logo" href="#hero" data-transition data-hover>
+      TL<sup>®</sup><span>Touch&nbsp;Lab</span>
+    </a>
+    <nav class="site-head__nav">
+      <a href="#about" data-transition data-hover>About<i>实验室</i></a>
+      <a href="#lab"   data-transition data-hover>Experience<i>互动</i></a>
+      <a href="#info"  data-transition data-hover>Info<i>信息</i></a>
+      <a href="#join" class="site-head__cta" data-transition data-hover>21.06.2026</a>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ SECTION 1 : HERO ============ -->
+    <section class="hero" id="hero">
+
+      <div class="hero__hands" data-depth="0.045" aria-hidden="true">
+        <svg class="hand hand--top" viewBox="0 0 300 480">
+          <use class="hand__glow"  href="#hand-shape" fill="#FF3D9A" filter="url(#blur-big)"/>
+          <use class="hand__fill"  href="#hand-shape" fill="url(#thermal-flip)" filter="url(#hand-rough)"/>
+          <use class="hand__sheen" href="#hand-shape" fill="url(#sheen)"/>
+        </svg>
+        <svg class="hand hand--bottom" viewBox="0 0 300 480">
+          <use class="hand__glow"  href="#hand-shape" fill="#FFE45C" filter="url(#blur-big)"/>
+          <use class="hand__fill"  href="#hand-shape" fill="url(#thermal)" filter="url(#hand-rough)"/>
+          <use class="hand__sheen" href="#hand-shape" fill="url(#sheen)"/>
+        </svg>
+        <div class="hero__spark" data-depth="0.07"></div>
+      </div>
+
+      <div class="hero__meta" data-depth="0.018" aria-hidden="true">
+        <p class="hero__meta-zh">探索对话<br>感知世界</p>
+        <p class="hero__meta-en">Explore<br>Through<br>Touch</p>
+      </div>
+
+      <div class="hero__content">
+        <h1 class="hero__title" data-depth="0.012">
+          <span class="line"><span class="line__inner glitch" data-text="TOUCH">TOUCH</span></span>
+          <span class="line"><span class="line__inner glitch" data-text="LAB">LAB</span></span>
+        </h1>
+        <div class="hero__sub">
+          <p class="hero__zh">触觉实验室</p>
+          <p class="hero__tag">Feel Before<br>You See</p>
+        </div>
+        <ul class="hero__facts">
+          <li>21 June 2026</li>
+          <li>14:00 — 18:00</li>
+          <li>Design Studio 3</li>
+        </ul>
+        <a class="btn btn--hero" href="#about" data-transition data-magnetic id="hero-cta">
+          <span class="btn__goo" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="btn__label">Enter the Lab<em>进入实验室</em></span>
+        </a>
+      </div>
+
+      <div class="hero__badge" aria-hidden="true">
+        <svg viewBox="0 0 300 480"><use href="#hand-shape" fill="#fff"/></svg>
+        <p>Touch<br>Explore<br>Feel.</p>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="hero__scroll-line"></span>Scroll&nbsp;/&nbsp;滚动探索
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2 : WHAT IS TOUCH LAB ============ -->
+    <section class="section about" id="about" data-bg="plum">
+      <div class="about__giant" aria-hidden="true">PERCEPTION</div>
+      <div class="shell">
+        <p class="section__index">01 — What is Touch Lab</p>
+        <h2 class="about__statement">
+          <span class="reveal-line"><span>触觉，是最先抵达的语言。</span></span>
+          <span class="reveal-line"><span>Touch is the first language —</span></span>
+          <span class="reveal-line"><span>felt before it is seen.</span></span>
+        </h2>
+        <div class="about__cols">
+          <p class="about__zh reveal-fade">Touch Lab 触觉实验室是一场关于感知的实验性展览。我们把皮肤当作界面，把温度、压力与震动当作语法——邀请你伸出手，重新阅读这个世界。</p>
+          <p class="about__en reveal-fade">An experimental exhibition on perception, by the Visual Communication Department. Skin becomes the interface; heat, pressure and vibration become the grammar. Read the world again — with your hands.</p>
+        </div>
+        <ul class="about__stats">
+          <li class="reveal-fade"><b>03</b><span>互动装置<br>Installations</span></li>
+          <li class="reveal-fade"><b>04</b><span>小时<br>Hours</span></li>
+          <li class="reveal-fade"><b>01</b><span>空间<br>Studio</span></li>
+          <li class="reveal-fade"><b>∞</b><span>感知<br>Sensations</span></li>
+        </ul>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>Touch ✺ Perception ✺ Exploration ✺ Experiment ✺ Sensory Design ✺ Interactive Art ✺&nbsp;</span>
+          <span>Touch ✺ Perception ✺ Exploration ✺ Experiment ✺ Sensory Design ✺ Interactive Art ✺&nbsp;</span>
+        </div>
+        <div class="marquee__track marquee__track--rev">
+          <span>触觉 ✺ 感知 ✺ 探索 ✺ 实验 ✺ 感官设计 ✺ 互动艺术 ✺&nbsp;</span>
+          <span>触觉 ✺ 感知 ✺ 探索 ✺ 实验 ✺ 感官设计 ✺ 互动艺术 ✺&nbsp;</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3 : INTERACTIVE EXPERIENCE ============ -->
+    <section class="section lab" id="lab" data-bg="dark">
+      <div class="shell lab__head">
+        <p class="section__index">02 — Interactive Experience</p>
+        <h2 class="lab__title">把手伸进<br><i>能量核心</i></h2>
+        <p class="lab__hint">移动光标，扰动它 · 点击，释放脉冲<br><span>Move to disturb · Click to pulse</span></p>
+      </div>
+      <div class="lab__stage" data-core-anchor>
+        <div class="lab__ring" aria-hidden="true"></div>
+        <div class="lab__ring lab__ring--inner" aria-hidden="true"></div>
+        <span class="lab__cross lab__cross--tl" aria-hidden="true">+</span>
+        <span class="lab__cross lab__cross--tr" aria-hidden="true">+</span>
+        <span class="lab__cross lab__cross--bl" aria-hidden="true">+</span>
+        <span class="lab__cross lab__cross--br" aria-hidden="true">+</span>
+      </div>
+      <ul class="lab__cards shell">
+        <li class="card reveal-fade" data-hover>
+          <span class="card__no">01</span>
+          <h3>Heat Trace<i>热感轨迹</i></h3>
+          <p>红外之眼，看见手掌留下的温度残影。</p>
+        </li>
+        <li class="card reveal-fade" data-hover>
+          <span class="card__no">02</span>
+          <h3>Liquid Pressure<i>液态压力</i></h3>
+          <p>按压流体界面，听见材质的回声。</p>
+        </li>
+        <li class="card reveal-fade" data-hover>
+          <span class="card__no">03</span>
+          <h3>Vibration Field<i>震动场域</i></h3>
+          <p>让低频穿过指尖，重写空间的边界。</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============ SECTION 4 : EVENT INFORMATION ============ -->
+    <section class="section info" id="info" data-bg="pink">
+      <div class="info__date" aria-hidden="true">21.06</div>
+      <div class="shell">
+        <p class="section__index">03 — Event Information</p>
+        <ul class="info__rows">
+          <li class="info-row" data-hover>
+            <span class="info-row__label">Date<i>日期</i></span>
+            <span class="info-row__value">21 June 2026<em>星期日</em></span>
+          </li>
+          <li class="info-row" data-hover>
+            <span class="info-row__label">Time<i>时间</i></span>
+            <span class="info-row__value">14:00 — 18:00<em>免费入场 · 需预约</em></span>
+          </li>
+          <li class="info-row" data-hover>
+            <span class="info-row__label">Venue<i>地点</i></span>
+            <span class="info-row__value">Design Studio 3<em>设计三号工作室</em></span>
+          </li>
+          <li class="info-row" data-hover>
+            <span class="info-row__label">Host<i>主办</i></span>
+            <span class="info-row__value">Visual Communication Dept.<em>视觉传达系</em></span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 5 : CALL TO ACTION ============ -->
+    <section class="section join" id="join" data-bg="yellow">
+      <div class="shell join__inner">
+        <p class="section__index">04 — Call to Action</p>
+        <h2 class="join__title">
+          <span class="reveal-line"><span>Touch.</span></span>
+          <span class="reveal-line"><span>Explore.</span></span>
+          <span class="reveal-line"><span>Feel.</span></span>
+        </h2>
+        <p class="join__zh reveal-fade">触摸 · 探索 · 感受 —— 把你的名字留给 21 June 2026。</p>
+        <a class="btn btn--big" href="#join" data-modal data-magnetic id="join-cta">
+          <span class="btn__goo" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="btn__label">Reserve a Spot<em>立即预约</em></span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <svg class="footer__hand" viewBox="0 0 300 480" aria-hidden="true"><use href="#hand-shape" fill="currentColor"/></svg>
+    <p>Touch Lab<sup>®</sup> 2026 — Visual Communication Department</p>
+    <p class="footer__tag">Touch · Explore · Feel.</p>
+  </footer>
+
+  <!-- ============ RESERVATION MODAL ============ -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal__panel">
+      <div class="modal__stamp" aria-hidden="true">✓</div>
+      <h3>预约成功<span>You're on the list</span></h3>
+      <p>21 June 2026 · 14:00 — 18:00<br>Design Studio 3 · 触觉实验室见。</p>
+      <button class="modal__close" type="button" data-hover>关闭 / Close</button>
+    </div>
+  </div>
+
+  <!-- ============ LIQUID TRANSITION ============ -->
+  <canvas id="transition" class="transition-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============ LOADER ============ -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__center">
+      <div class="loader__word">Touch<span>Lab</span></div>
+      <div class="loader__bar"><i></i></div>
+      <div class="loader__pct">000</div>
+      <div class="loader__zh">触觉加载中</div>
+    </div>
+  </div>
+
+</body>
+</html>
