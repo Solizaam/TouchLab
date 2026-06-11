@@ -1,0 +1,70 @@
+/* ============================================================
+   TOUCH LAB — custom cursor
+   ============================================================ */
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.cursor.is-on {
+  opacity: 1;
+}
+
+.cursor__ring,
+.cursor__dot,
+.cursor__halo {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cursor__ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+  mix-blend-mode: difference;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.cursor__dot {
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  background: #fff;
+  mix-blend-mode: difference;
+}
+
+.cursor__halo {
+  width: 110px;
+  height: 110px;
+  margin: -55px 0 0 -55px;
+  background: radial-gradient(circle, rgba(255, 228, 92, 0.55), rgba(255, 61, 154, 0.3) 45%, transparent 70%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.cursor.is-hover .cursor__ring {
+  border-color: var(--n-yellow);
+  background: rgba(255, 228, 92, 0.12);
+}
+.cursor.is-hover .cursor__halo {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .cursor,
+  .glow-follow {
+    display: none !important;
+  }
+}

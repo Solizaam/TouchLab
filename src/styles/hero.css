@@ -1,0 +1,325 @@
+/* ============================================================
+   TOUCH LAB — hero
+   ============================================================ */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(5rem, 12vh, 8rem) var(--shell-pad) clamp(4rem, 10vh, 6rem);
+  overflow: hidden;
+}
+
+/* ---------- hands ---------- */
+
+.hero__hands {
+  position: absolute;
+  right: 2vw;
+  top: 50%;
+  width: min(46vw, 720px);
+  aspect-ratio: 1 / 1.05;
+  transform: translateY(-50%);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hand {
+  position: absolute;
+  overflow: visible;
+  will-change: transform, filter;
+}
+.hand--top {
+  width: 64%;
+  right: -4%;
+  top: -10%;
+  transform: rotate(212deg);
+  animation: hand-float-a 7s ease-in-out infinite alternate;
+}
+.hand--bottom {
+  width: 64%;
+  left: -2%;
+  bottom: -8%;
+  transform: rotate(34deg);
+  animation: hand-float-b 8s ease-in-out infinite alternate;
+}
+
+@keyframes hand-float-a {
+  from { transform: rotate(212deg) translateY(0); }
+  to   { transform: rotate(209deg) translateY(18px); }
+}
+@keyframes hand-float-b {
+  from { transform: rotate(34deg) translateY(0); }
+  to   { transform: rotate(37deg) translateY(-18px); }
+}
+
+.hand__glow {
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+.hand__sheen {
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+
+/* spark in the gap between fingertips */
+.hero__spark {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: clamp(90px, 11vw, 170px);
+  aspect-ratio: 1;
+  margin: -5.5vw 0 0 -5.5vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 228, 92, 0.55) 35%, rgba(255, 61, 154, 0.25) 60%, transparent 75%);
+  mix-blend-mode: screen;
+  animation: spark-pulse 2.6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes spark-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.22); opacity: 1; }
+}
+
+/* ---------- copy ---------- */
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 60vw;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(4.2rem, 13.5vw, 12.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  color: #fff;
+  will-change: transform;
+}
+.hero__title .line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.04em;
+}
+.hero__title .line__inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+.hero__sub {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(1.4rem, 3vw, 2.8rem);
+  margin-top: clamp(1.2rem, 3vh, 2.2rem);
+}
+.hero__zh {
+  font-family: 'Noto Sans SC', var(--font-body);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+  letter-spacing: 0.28em;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(240, 45, 125, 0.55);
+}
+.hero__tag {
+  font-weight: 700;
+  font-size: clamp(0.8rem, 1.3vw, 1.05rem);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  line-height: 1.5;
+  opacity: 0.95;
+}
+
+.hero__facts {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: clamp(1.6rem, 4vh, 2.6rem);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.hero__facts li::before {
+  content: '✺';
+  color: var(--yellow);
+  margin-right: 0.7em;
+  font-size: 0.85em;
+}
+
+/* ---------- corner meta (poster right column) ---------- */
+
+.hero__meta {
+  position: absolute;
+  top: clamp(5.4rem, 12vh, 7.5rem);
+  right: var(--shell-pad);
+  text-align: right;
+  z-index: 2;
+  will-change: transform;
+}
+.hero__meta-zh {
+  font-family: 'Noto Sans SC', var(--font-body);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  letter-spacing: 0.42em;
+  line-height: 1.9;
+}
+.hero__meta-en {
+  margin-top: 0.9rem;
+  font-weight: 700;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  line-height: 1.9;
+  color: var(--n-yellow);
+}
+
+.hero__badge {
+  position: absolute;
+  right: var(--shell-pad);
+  bottom: clamp(2rem, 6vh, 4rem);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-align: left;
+}
+.hero__badge svg {
+  width: 30px;
+  height: 48px;
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.5));
+}
+.hero__badge p {
+  font-weight: 700;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  line-height: 1.8;
+}
+
+.hero__scroll {
+  position: absolute;
+  left: var(--shell-pad);
+  bottom: clamp(2rem, 6vh, 4rem);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  opacity: 0.9;
+}
+.hero__scroll-line {
+  width: 54px;
+  height: 1.5px;
+  background: #fff;
+  transform-origin: left;
+  animation: scroll-line 2.2s cubic-bezier(0.77, 0, 0.18, 1) infinite;
+}
+@keyframes scroll-line {
+  0% { transform: scaleX(0); transform-origin: left; }
+  45% { transform: scaleX(1); transform-origin: left; }
+  55% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+/* ---------- glitch ---------- */
+
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch.is-glitching::before {
+  opacity: 0.85;
+  color: var(--n-blue);
+  animation: glitch-a 0.28s steps(2, end) infinite;
+}
+.glitch.is-glitching::after {
+  opacity: 0.85;
+  color: var(--n-yellow);
+  animation: glitch-b 0.28s steps(2, end) infinite reverse;
+}
+@keyframes glitch-a {
+  0%   { clip-path: inset(8% 0 62% 0);  transform: translate(-0.04em, -0.012em); }
+  34%  { clip-path: inset(48% 0 22% 0); transform: translate(0.035em, 0.01em); }
+  67%  { clip-path: inset(70% 0 4% 0);  transform: translate(-0.025em, 0.015em); }
+  100% { clip-path: inset(20% 0 55% 0); transform: translate(0.04em, -0.01em); }
+}
+@keyframes glitch-b {
+  0%   { clip-path: inset(55% 0 18% 0); transform: translate(0.04em, 0.012em); }
+  34%  { clip-path: inset(10% 0 72% 0); transform: translate(-0.03em, -0.012em); }
+  67%  { clip-path: inset(38% 0 36% 0); transform: translate(0.02em, 0.014em); }
+  100% { clip-path: inset(64% 0 8% 0);  transform: translate(-0.04em, 0.01em); }
+}
+
+/* ---------- liquid buttons ---------- */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(2rem, 5vh, 3.2rem);
+  padding: 1.25rem 2.9rem;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  overflow: hidden;
+  isolation: isolate;
+  will-change: transform;
+  transition: color 0.35s, border-color 0.35s;
+}
+
+.btn__goo {
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  filter: url(#goo);
+}
+.btn__goo i {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--yellow);
+  transform: scale(0);
+  will-change: transform;
+}
+.btn__goo i:nth-child(1) { width: 70%; height: 160%; left: -10%;  top: -30%; }
+.btn__goo i:nth-child(2) { width: 75%; height: 170%; left: 30%;   top: -36%; }
+.btn__goo i:nth-child(3) { width: 65%; height: 150%; right: -8%;  top: -24%; }
+
+.btn__label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9em;
+  transition: color 0.35s;
+}
+.btn__label em {
+  font-style: normal;
+  font-size: 0.78em;
+  letter-spacing: 0.3em;
+  opacity: 0.85;
+}
+
+.btn:hover {
+  color: var(--ink);
+  border-color: var(--yellow);
+}
+
+.btn--big {
+  padding: 1.7rem 3.8rem;
+  font-size: 1.05rem;
+  border-width: 2.5px;
+}

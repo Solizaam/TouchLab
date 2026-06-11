@@ -1,0 +1,117 @@
+/* ============================================================
+   TOUCH LAB — responsive (1920 / 1440 / MacBook / mobile)
+   ============================================================ */
+
+@media (max-width: 1180px) {
+  .hero__hands {
+    width: 54vw;
+    right: -4vw;
+  }
+  .hero__content {
+    max-width: 66vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero__meta {
+    display: none;
+  }
+  .about__cols {
+    grid-template-columns: 1fr;
+  }
+  .lab__cards {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .info-row__value {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-head__nav a:not(.site-head__cta) {
+    display: none;
+  }
+
+  .hero {
+    align-items: flex-end;
+  }
+  .hero__content {
+    max-width: 100%;
+  }
+  .hero__title {
+    font-size: clamp(4rem, 19.5vw, 7rem);
+  }
+  .hero__hands {
+    width: 96vw;
+    right: -14vw;
+    top: 38%;
+    opacity: 0.85;
+  }
+  .hero__spark {
+    margin: -12vw 0 0 -12vw;
+  }
+  .hero__badge {
+    display: none;
+  }
+  .hero__sub {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .hero__facts {
+    gap: 1.1rem;
+    font-size: 0.72rem;
+  }
+  .hero__scroll {
+    bottom: 1.2rem;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about__giant {
+    top: 4%;
+  }
+
+  .lab__stage {
+    height: 52vh;
+  }
+  .lab__cross {
+    display: none;
+  }
+
+  .info__date {
+    top: auto;
+    bottom: 2%;
+    font-size: 34vw;
+  }
+
+  .join__title {
+    font-size: clamp(3.4rem, 17vw, 5.4rem);
+  }
+
+  .footer {
+    gap: 0.8rem;
+    font-size: 0.68rem;
+  }
+  .footer__tag {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* short laptop viewports (e.g. 1440×900 / MacBook) */
+@media (max-height: 760px) and (min-width: 1000px) {
+  .hero__title {
+    font-size: clamp(4rem, 11.5vw, 10rem);
+  }
+  .hero__hands {
+    width: min(42vw, 600px);
+  }
+}
